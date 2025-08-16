@@ -54,17 +54,23 @@ export const NewsCard = ({ news, onClick }: NewsCardProps) => {
             {news["Resumo breve"]}
           </p>
           
-          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-            {news.fonte && (
-              <span className="flex items-center gap-1">
-                <Clock className="h-3 w-3" />
-                {news.fonte}
-              </span>
-            )}
+          <div className="flex items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-2">
+              {news.portal && (
+                <span className="font-medium text-primary bg-primary/10 px-2 py-1 rounded-md">
+                  {news.portal}
+                </span>
+              )}
+              {news.data && (
+                <span className="text-muted-foreground">
+                  {news.data}
+                </span>
+              )}
+            </div>
             {news.audio && (
               <span className="flex items-center gap-1 text-primary">
                 <PlayCircle className="h-3 w-3" />
-                Áudio disponível
+                Áudio
               </span>
             )}
           </div>
