@@ -1,12 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { NewsGrid } from "@/components/NewsGrid";
+import { NewsDetail } from "@/components/NewsDetail";
+import { Header } from "@/components/Header";
+
+export interface NewsItem {
+  id: number;
+  Titulo: string;
+  "Resumo breve": string;
+  capa: string;
+  audio: string;
+  fonte: string;
+}
 
 const Index = () => {
+  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="container mx-auto px-4 py-6 max-w-4xl">
+        {selectedNews ? (
+          <NewsDetail 
+            news={selectedNews} 
+            onBack={() => setSelectedNews(null)} 
+          />
+        ) : (
+          <NewsGrid onNewsClick={setSelectedNews} />
+        )}
+      </main>
     </div>
   );
 };
