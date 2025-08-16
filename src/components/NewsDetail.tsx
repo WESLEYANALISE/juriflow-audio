@@ -70,7 +70,7 @@ export const NewsDetail = ({ news, onBack }: NewsDetailProps) => {
           variant="ghost"
           size="sm"
           onClick={onBack}
-          className="hover:bg-surface-elevated"
+          className="hover:bg-surface-elevated bg-yellow-500/20 text-yellow-200 hover:bg-yellow-500/30"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Voltar
@@ -79,31 +79,37 @@ export const NewsDetail = ({ news, onBack }: NewsDetailProps) => {
 
       {/* Featured Image */}
       <Card className="overflow-hidden bg-gradient-surface border-border/50">
-        <div className="aspect-video bg-surface-elevated flex items-center justify-center">
-          {news.capa ? (
-            <img
-              src={news.capa}
-              alt={news.Titulo}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                target.nextElementSibling?.classList.remove('hidden');
-              }}
-            />
-          ) : (
-            <div className="hidden w-full h-full bg-gradient-primary flex items-center justify-center">
-              <Volume2 className="h-12 w-12 text-primary-foreground opacity-60" />
-            </div>
-          )}
-        </div>
+        {news.capa ? (
+          <img
+            src={news.capa}
+            alt={news.Titulo}
+            className="w-full h-auto"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              target.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+        ) : (
+          <div className="hidden w-full h-64 bg-gradient-primary flex items-center justify-center">
+            <Volume2 className="h-12 w-12 text-primary-foreground opacity-60" />
+          </div>
+        )}
       </Card>
 
-      {/* Title */}
+      {/* Title and Meta */}
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
           {news.Titulo}
         </h1>
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          {news.portal && (
+            <span className="font-medium">{news.portal}</span>
+          )}
+          {news.data && (
+            <span>{news.data}</span>
+          )}
+        </div>
       </div>
 
       {/* Audio Player */}
@@ -147,9 +153,12 @@ export const NewsDetail = ({ news, onBack }: NewsDetailProps) => {
           <audio
             ref={audioRef}
             src={news.audio}
+            autoPlay
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={() => setIsPlaying(false)}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
           />
         </Card>
       )}

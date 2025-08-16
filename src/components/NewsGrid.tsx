@@ -18,14 +18,14 @@ export const NewsGrid = ({ onNewsClick }: NewsGridProps) => {
         const { data, error } = await supabase
           .from("NOTICIAS-AUDIO")
           .select("*")
-          .order("id", { ascending: false });
+          .order("data", { ascending: false });
 
         if (error) {
           console.error("Error fetching news:", error);
           return;
         }
 
-        setNews(data || []);
+        setNews((data || []) as NewsItem[]);
       } catch (error) {
         console.error("Error:", error);
       } finally {

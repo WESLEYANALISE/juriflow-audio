@@ -10,6 +10,8 @@ export interface NewsItem {
   capa: string;
   audio: string;
   fonte: string;
+  portal: string;
+  data: string;
 }
 
 const Index = () => {
